@@ -6,6 +6,10 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cors({
+  origin: ['https://tu-api.onrender.com']
+}));
+
 
 const visitantesRoutes = require('./routes/visitantes.routes');
 const productosRoutes = require('./routes/productos.routes');
