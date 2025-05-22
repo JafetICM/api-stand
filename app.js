@@ -1,6 +1,8 @@
 // app.js
 const express = require('express');
 require('dotenv').config();
+const cors = require('cors');
+
 const app = express();
 
 const visitantesRoutes = require('./routes/visitantes.routes');
@@ -10,6 +12,7 @@ const usuariosRoutes = require('./routes/usuarios.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
