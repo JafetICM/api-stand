@@ -7,9 +7,12 @@ const visitantesRoutes = require('./routes/visitantes.routes');
 const productosRoutes = require('./routes/productos.routes');
 const seguimientosRoutes = require('./routes/seguimientos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
 
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/visitantes', visitantesRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/seguimientos', seguimientosRoutes);

@@ -1,3 +1,4 @@
+//controllers/visitantes.controller.js
 const db = require('../db');
 
 const obtenerVisitantes = async (req, res) => {
