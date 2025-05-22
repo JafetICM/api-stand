@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://api-stand.onrender.com',
+        url: 'https://api-stand.onrender.com',
       },
     ],
   },
