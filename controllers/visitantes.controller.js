@@ -1,4 +1,5 @@
 //controllers/visitantes.controller.js
+// controllers/visitantes.controller.js
 const db = require('../db');
 
 const obtenerVisitantes = async (req, res) => {
@@ -6,6 +7,7 @@ const obtenerVisitantes = async (req, res) => {
     const [rows] = await db.query('SELECT * FROM visitantes ORDER BY fecha_registro DESC');
     res.json(rows);
   } catch (error) {
+    console.error('🔥 Error en obtenerVisitantes:', error);
     res.status(500).json({ error: 'Error al obtener visitantes' });
   }
 };
@@ -19,6 +21,7 @@ const crearVisitante = async (req, res) => {
     );
     res.status(201).json({ id: result.insertId });
   } catch (error) {
+    console.error('🔥 Error en crearVisitante:', error);
     res.status(500).json({ error: 'Error al crear visitante' });
   }
 };
