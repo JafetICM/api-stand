@@ -2,6 +2,28 @@
 // controllers/visitantes.controller.js
 const db = require('../db');
 
+// Obtener visitantes interesados en un producto específico
+const obtenerVisitantesPorProducto = async (req, res) => {
+  const { producto_id } = req.params;
+
+  try {
+    const query = `
+      SELECT v.*
+      FROM visitantes v
+      INNER JOIN visitantes_productos vp ON v.id = vp.visitante_id
+      WHERE vp.producto_id = ?
+      ORDER BY v.fecha_registro DESC
+    `;
+
+    const [rows] = await db.query(query, [producto_id]);
+    res.json(rows);
+  } catch (error) {
+    console.error('🔥 Error en obtenerVisitantesPorProducto:', error);
+    res.status(500).json({ error: 'Error al obtener visitantes por producto' });
+  }
+};
+
+
 const obtenerVisitantes = async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM visitantes ORDER BY fecha_registro DESC');
@@ -28,6 +50,7 @@ const crearVisitante = async (req, res) => {
 
 
 module.exports = {
+  obtenerVisitantesPorProducto,
   obtenerVisitantes,
   crearVisitante
 };

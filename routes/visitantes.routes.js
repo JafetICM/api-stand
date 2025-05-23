@@ -1,9 +1,9 @@
-// routes/visitantes.routes.js
 const express = require('express');
 const router = express.Router();
 const {
   obtenerVisitantes,
-  crearVisitante
+  crearVisitante,
+  obtenerVisitantesPorProducto, // nuevo controlador
 } = require('../controllers/visitantes.controller');
 
 /**
@@ -44,8 +44,26 @@ const {
  *         description: Visitante creado
  */
 
+/**
+ * @swagger
+ * /api/visitantes/producto/{producto_id}:
+ *   get:
+ *     summary: Obtener visitantes interesados en un producto
+ *     tags: [Visitantes]
+ *     parameters:
+ *       - in: path
+ *         name: producto_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del producto
+ *     responses:
+ *       200:
+ *         description: Lista de visitantes interesados
+ */
+
 router.get('/', obtenerVisitantes);
 router.post('/', crearVisitante);
-
+router.get('/producto/:producto_id', obtenerVisitantesPorProducto);
 
 module.exports = router;
