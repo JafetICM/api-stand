@@ -37,6 +37,8 @@ const {
  *                 type: string
  *               notas:
  *                 type: string
+ *               usuario_id:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Visitante creado

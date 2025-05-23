@@ -13,11 +13,11 @@ const obtenerVisitantes = async (req, res) => {
 };
 
 const crearVisitante = async (req, res) => {
-  const { nombre_completo, correo, telefono, empresa, cargo, notas } = req.body;
+  const { nombre_completo, correo, telefono, empresa, cargo, notas, usuario_id } = req.body;
   try {
     const [result] = await db.query(
-      'INSERT INTO visitantes (nombre_completo, correo, telefono, empresa, cargo, notas) VALUES (?, ?, ?, ?, ?, ?)',
-      [nombre_completo, correo, telefono, empresa, cargo, notas]
+      'INSERT INTO visitantes (nombre_completo, correo, telefono, empresa, cargo, notas, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [nombre_completo, correo, telefono, empresa, cargo, notas, usuario_id]
     );
     res.status(201).json({ id: result.insertId });
   } catch (error) {
@@ -25,6 +25,7 @@ const crearVisitante = async (req, res) => {
     res.status(500).json({ error: 'Error al crear visitante' });
   }
 };
+
 
 module.exports = {
   obtenerVisitantes,
