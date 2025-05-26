@@ -13,31 +13,38 @@ const {
 /**
  * @swagger
  * /api/visitantes:
- *   post:
- *     summary: Crear un nuevo visitante
+ *   get:
+ *     summary: Obtener todos los visitantes
  *     tags: [Visitantes]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nombre_completo:
- *                 type: string
- *               correo:
- *                 type: string
- *               telefono:
- *                 type: string
- *               empresa:
- *                 type: string
- *               cargo:
- *                 type: string
- *               notas:
- *                 type: string
  *     responses:
- *       201:
- *         description: Visitante creado
+ *       200:
+ *         description: Lista de visitantes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   nombre_completo:
+ *                     type: string
+ *                   correo:
+ *                     type: string
+ *                   telefono:
+ *                     type: string
+ *                   empresa:
+ *                     type: string
+ *                   cargo:
+ *                     type: string
+ *                   fecha_registro:
+ *                     type: string
+ *                     format: date-time
+ *                   estado:
+ *                     type: string
+ *                   notas:
+ *                     type: string
  */
 
 
