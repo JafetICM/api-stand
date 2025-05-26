@@ -55,8 +55,6 @@ const {
  *         name: producto_id
  *         schema:
  *           type: integer
- *         required: true
- *         description: ID del producto
  *     responses:
  *       200:
  *         description: Lista de visitantes interesados
