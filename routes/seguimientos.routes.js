@@ -1,4 +1,4 @@
-// routes/seguimientos.routes.js
+//routes/visitantes.routes.js
 const express = require('express');
 const router = express.Router();
 const { addSeguimiento, getSeguimientos } = require('../controllers/seguimientos.controller');
@@ -44,10 +44,14 @@ const { addSeguimiento, getSeguimientos } = require('../controllers/seguimientos
  *               descripcion:
  *                 type: string
  *               realizado_por:
- *                 type: string
+ *                 type: integer
+ *             required:
+ *               - visitante_id
+ *               - tipo
+ *               - realizado_por
  *     responses:
  *       201:
- *         description: Seguimiento registrado
+ *         description: Seguimiento registrado correctamente
  */
 
 router.get('/:visitante_id', getSeguimientos);
