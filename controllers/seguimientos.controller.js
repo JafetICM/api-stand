@@ -1,8 +1,7 @@
 // controllers/seguimientos.controller.js
 const db = require('../db');
 
-const db = require('../db');
-// controllers/seguimientos.controller.js
+
 const getSeguimientos = async (req, res) => {
   const { visitante_id } = req.params;
   try {
