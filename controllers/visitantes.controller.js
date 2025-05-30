@@ -34,6 +34,68 @@ const crearVisitante = async (req, res) => {
   }
 };
 
+const asignarProductosAVisitante = async (req, res) => {
+  const { visitante_id, productos } = req.body;
+
+  if (!Array.isArray(productos) || productos.length === 0) {
+    return res.status(400).json({ error: 'Debe enviar un arreglo de productos' });
+  }
+
+  try {
+    await db.query('DELETE FROM visitantes_productos WHERE visitante_id = ?', [visitante_id]);
+
+    const placeholders = productos.map(() => '(?, ?)').join(', ');
+    const flattenedValues = productos.flatMap(producto_id => [visitante_id, producto_id]);
+
+    const sql = `INSERT INTO visitantes_productos (visitante_id, producto_id) VALUES ${placeholders}`;
+
+    await db.query(sql, flattenedValues);
+
+    res.status(200).json({ message: 'Productos asignados correctamente' });
+  } catch (error) {
+    console.error('🔥 Error en asignarProductosAVisitante:', error);
+    res.status(500).json({ error: 'Error al asignar productos' });
+  }
+};
+
+const obtenerProductosDeVisitante = async (req, res) => {
+  const { visitante_id } = req.params;
+
+  try {
+    const query = `
+      SELECT p.*
+      FROM productos p
+      INNER JOIN visitantes_productos vp ON p.id = vp.producto_id
+      WHERE vp.visitante_id = ?
+    `;
+    const [rows] = await db.query(query, [visitante_id]);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error en obtenerProductosDeVisitante:', error);
+    res.status(500).json({ error: 'Error al obtener productos del visitante' });
+  }
+};
+
+const obtenerVisitantesPorProducto = async (req, res) => {
+  const { producto_id } = req.params;
+
+  try {
+    const query = `
+      SELECT v.*
+      FROM visitantes v
+      INNER JOIN visitantes_productos vp ON v.id = vp.visitante_id
+      WHERE vp.producto_id = ?
+      ORDER BY v.fecha_registro DESC
+    `;
+    const [rows] = await db.query(query, [producto_id]);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error en obtenerVisitantesPorProducto:', error);
+    res.status(500).json({ error: 'Error al obtener visitantes por producto' });
+  }
+};
+
+
 const actualizarVisitante = async (req, res) => {
   const { id } = req.params;
   const { nombre_completo, correo, telefono, empresa, cargo, notas, estado } = req.body;
