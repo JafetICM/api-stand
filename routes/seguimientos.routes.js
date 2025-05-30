@@ -1,7 +1,7 @@
 //routes/visitantes.routes.js
 const express = require('express');
 const router = express.Router();
-const { addSeguimiento, getSeguimientos } = require('../controllers/seguimientos.controller');
+const { addSeguimiento, getSeguimientos, updateSeguimiento, deleteSeguimiento } = require('../controllers/seguimientos.controller');
 
 /**
  * @swagger
@@ -54,7 +54,56 @@ const { addSeguimiento, getSeguimientos } = require('../controllers/seguimientos
  *         description: Seguimiento registrado correctamente
  */
 
+/**
+ * @swagger
+ * /api/seguimientos/{id}:
+ *   put:
+ *     summary: Actualizar un seguimiento
+ *     tags: [Seguimientos]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tipo:
+ *                 type: string
+ *               descripcion:
+ *                 type: string
+ *               realizado_por:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Seguimiento actualizado correctamente
+ */
+
+/**
+ * @swagger
+ * /api/seguimientos/{id}:
+ *   delete:
+ *     summary: Eliminar un seguimiento
+ *     tags: [Seguimientos]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Seguimiento eliminado correctamente
+ */
+
 router.get('/:visitante_id', getSeguimientos);
 router.post('/', addSeguimiento);
+router.put('/', updateSeguimiento);
+router.delete('/', deleteSeguimiento);
 
 module.exports = router;

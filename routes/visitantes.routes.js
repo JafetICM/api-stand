@@ -8,6 +8,9 @@ const {
   asignarProductosAVisitante,
   obtenerProductosDeVisitante,
   obtenerVisitantesPorProducto,
+  actualizarVisitante,
+  eliminarVisitante,
+  exportarVisitantesExcel
 } = require('../controllers/visitantes.controller');
 
 
@@ -165,6 +168,77 @@ const {
 
 /**
  * @swagger
+ * /api/visitantes/{id}:
+ *   put:
+ *     summary: Actualizar los datos de un visitante
+ *     tags: [Visitantes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre_completo:
+ *                 type: string
+ *               correo:
+ *                 type: string
+ *               telefono:
+ *                 type: string
+ *               empresa:
+ *                 type: string
+ *               cargo:
+ *                 type: string
+ *               notas:
+ *                 type: string
+ *               estado:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Visitante actualizado correctamente
+ */
+
+/**
+ * @swagger
+ * /api/visitantes/{id}:
+ *   delete:
+ *     summary: Eliminar un visitante
+ *     tags: [Visitantes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Visitante eliminado correctamente
+ */
+
+/**
+ * @swagger
+ * /api/visitantes/exportar:
+ *   get:
+ *     summary: Exportar la lista de visitantes a Excel
+ *     tags: [Visitantes]
+ *     responses:
+ *       200:
+ *         description: Archivo Excel con la lista de visitantes
+ *         content:
+ *           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+ *             schema:
+ *               type: string
+ *               format: binary
+ */
+
+/**
+ * @swagger
  * /api/visitantes/producto/{producto_id}:
  *   get:
  *     summary: Obtener visitantes interesados en un producto
@@ -186,6 +260,9 @@ router.get('/:visitante_id/productos', obtenerProductosDeVisitante);
 router.get('/', obtenerVisitantes);
 router.post('/', crearVisitante);
 router.post('/asignar-productos', asignarProductosAVisitante);
+router.put('/:id', actualizarVisitante);
+router.delete('/:id', eliminarVisitante);
+router.get('/exportar', exportarVisitantesExcel);
 
 module.exports = router;
 // Exportar el router para usarlo en app.js

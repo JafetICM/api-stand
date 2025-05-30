@@ -1,3 +1,4 @@
+//utils/notificaciones.js
 require('dotenv').config(); // Asegura que las variables de entorno se carguen
 
 const nodemailer = require('nodemailer');
