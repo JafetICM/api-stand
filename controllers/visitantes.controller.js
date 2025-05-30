@@ -1,6 +1,7 @@
 //controllers/visitantes.controller.js
 
 const db = require('../db');
+const { enviarCorreoRegistro, enviarSmsRegistro } = require('../utils/notificaciones');
 
 const obtenerVisitantes = async (req, res) => {
   try {
@@ -25,6 +26,15 @@ const crearVisitante = async (req, res) => {
       `INSERT INTO visitantes (nombre_completo, correo, telefono, empresa, cargo, notas) VALUES (?, ?, ?, ?, ?, ?)`,
       [nombre_completo, correo, telefono, empresa, cargo, notas]
     );
+
+    // Enviar notificaciones
+    await enviarCorreoRegistro(correo, nombre_completo);
+
+    // Opcionalmente, enviar SMS si el número de teléfono es válido
+    if (/^\d{10}$/.test(telefono)) { // Validación simple de número de teléfono
+      await enviarSmsRegistro(telefono, nombre_completo);
+    }
+    
     res.status(201).json({ id: result.insertId, message: 'Visitante creado correctamente' });
   } catch (error) {
     console.error('🔥 Error en crearVisitante:', error);
